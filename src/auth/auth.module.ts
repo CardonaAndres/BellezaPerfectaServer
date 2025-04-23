@@ -13,7 +13,7 @@ import { SECRET_KEY } from 'src/app/configs/app';
     JwtModule.register({
       global: true,
       secret: SECRET_KEY,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '6h' },
     }),
   ],
   controllers: [AuthController],

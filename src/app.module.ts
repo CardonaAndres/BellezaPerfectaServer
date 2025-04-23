@@ -4,6 +4,8 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { database_credentials } from './app/configs/app';
+import { ClientsModule } from './clients/clients.module';
+import { Client } from './clients/entities/client.entity';
 
 @Module({
   imports: [ 
@@ -15,12 +17,13 @@ import { database_credentials } from './app/configs/app';
       password: database_credentials.password,
       database: database_credentials.database,
       entities: [
-        User,
+        User, Client
       ],
       synchronize: true,
     }),
     AuthModule, 
-    UsersModule
+    UsersModule, 
+    ClientsModule
   ],
   controllers: [],
   providers: [],

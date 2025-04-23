@@ -2,13 +2,14 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { errorHandler } from 'src/app/middlewares/error.handler';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/login')
+  @HttpCode(200)
   async login(@Body() authDto : CreateAuthDto){
     try {
       const { userWithOutPassword, token } = await this.authService.login(authDto);
@@ -25,6 +26,7 @@ export class AuthController {
   }
 
   @Post('/register')
+  @HttpCode(200)
   async register(@Body() user : CreateUserDto){
     try {
       const newUser = await this.authService.register(user)
