@@ -4,7 +4,7 @@ export const SECRET_KEY = process.env.SECRET_KEY || 'secretKey210110011';
 
 export const database_credentials = {
   type : 'mysql' as const,
-  host : 'localhost' as const,
+  host : 'localhost' as const, // dokcer(host.docker.internal) | trabajo en local(localhost)
   port: 3306 as const,
   username: 'root' as const,
   password: '' as const,
