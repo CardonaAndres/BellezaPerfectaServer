@@ -18,12 +18,16 @@ const main = async () => {
   app.enableCors({
     origin : CLIENTS,
     credentials : true 
-  })
+  });
+
+  app.setGlobalPrefix('API/');
 
   app.use(morgan('dev'));
   
   app.useGlobalPipes(new ValidationPipe({
-    whitelist : true
+    whitelist : true,
+    forbidNonWhitelisted: true, // Lanza error si hay propiedades no permitidas
+    transform: true             // Convierte payloads a clases (útil con Swagger y DTOs)
   }));
 
   SwaggerModule.setup('docs', app, documentFactory);

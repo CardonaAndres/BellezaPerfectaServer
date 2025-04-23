@@ -1,8 +1,17 @@
 export const PORT = process.env.PORT ?? 3000;
 export const CLIENTS = ['http://localhost:5173'];
+export const SECRET_KEY = process.env.SECRET_KEY || 'secretKey210110011';
 
-export const description = `
-Esta API permite la gestión completa de un sistema de facturación interna para pequeñas y medianas empresas. 
+export const database_credentials = {
+  type : 'mysql' as const,
+  host : 'localhost' as const,
+  port: 3306 as const,
+  username: 'root' as const,
+  password: '' as const,
+  database: 'belleza_perfecta_db' as const,
+}
+
+export const description = ` Esta API permite la gestión completa de un sistema de facturación interna para pequeñas y medianas empresas. 
 
   🔧 Funcionalidades principales:
   - Generación y consulta de facturas internas
