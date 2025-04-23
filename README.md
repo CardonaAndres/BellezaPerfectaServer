@@ -1,6 +1,6 @@
-# 🧾 Sistema de Facturación Interna - Backend
+# 🧾 Sistema Belleza Perfecta - Backend
 
-Este es el backend del Sistema de Facturación Interna, desarrollado con [NestJS](https://nestjs.com/) y utilizando [MySQL](https://www.mysql.com/) como base de datos. El sistema permite gestionar clientes, productos, usuarios y facturas internas, facilitando el control administrativo y comercial del negocio.
+Este es el backend del Sistema empresarial de la empresa Belleza Perfecta, desarrollado con [NestJS](https://nestjs.com/) y utilizando [MySQL](https://www.mysql.com/) como base de datos. El sistema permite gestionar clientes, productos, usuarios y facturas internas, facilitando el control administrativo y comercial del negocio.
 
 ## 🚀 Características principales
 
