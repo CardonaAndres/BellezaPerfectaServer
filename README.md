@@ -16,6 +16,7 @@ Este es el backend del Sistema empresarial de la empresa Belleza Perfecta, desar
 - 📤 Exportación de reportes en formatos PDF y Excel
 - 🕵️ Registro de actividades de usuarios (historial de acciones)
 - 🌐 Arquitectura modular escalable con TypeORM
+- 🐳 **Soporte para ejecución con Docker**
 
 ---
 
@@ -33,6 +34,7 @@ Este es el backend del Sistema empresarial de la empresa Belleza Perfecta, desar
 - Node.js >= 18
 - MySQL >= 5.7
 - npm o yarn
+- (Opcional) [Docker](https://www.docker.com/) y [Docker Compose](https://docs.docker.com/compose/)
 
 ---
 
@@ -60,6 +62,24 @@ src/configs/app.ts
 Allí puedes configurar parámetros como la conexión a la base de datos, claves JWT, y otros valores globales.
 
 ---
+
+## 🐳 Docker (opcional)
+
+El proyecto incluye un `Dockerfile` que permite construir y ejecutar el backend fácilmente usando Docker. Esto elimina la necesidad de instalar dependencias localmente.
+
+### 🔨 Construcción de la imagen
+
+```bash
+docker build -t belleza-perfecta-backend .
+```
+
+### 🚀 Ejecución del contenedor
+
+```bash
+docker run -d -p 3000:3000 belleza-perfecta-backend
+```
+
+> 📝 Nota: La base de datos MySQL debe estar disponible externamente o en otro contenedor ya configurado.
 
 ## 🧪 Ejecución local
 

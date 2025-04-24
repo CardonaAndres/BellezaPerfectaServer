@@ -8,14 +8,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request }
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('/profile')
-  @UseGuards(AuthGuard)
   async profile(){
     return 'Mi perfil'
   }
 
-  @Get('/user')
-  @UseGuards(AuthGuard)
   async user(@Request() req : any){
     return req.user
   }

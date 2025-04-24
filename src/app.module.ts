@@ -6,6 +6,10 @@ import { User } from './users/entities/user.entity';
 import { database_credentials } from './app/configs/app';
 import { ClientsModule } from './clients/clients.module';
 import { Client } from './clients/entities/client.entity';
+import { ProductsModule } from './products/products.module';
+import { InventoryModule } from './inventory/inventory.module';
+import { Product } from './products/entities/product.entity';
+import { Inventory } from './inventory/entities/inventory.entity';
 
 @Module({
   imports: [ 
@@ -17,13 +21,18 @@ import { Client } from './clients/entities/client.entity';
       password: database_credentials.password,
       database: database_credentials.database,
       entities: [
-        User, Client
+        User, 
+        Client,
+        Product,
+        Inventory
       ],
       synchronize: true,
     }),
     AuthModule, 
     UsersModule, 
-    ClientsModule
+    ClientsModule, 
+    ProductsModule, 
+    InventoryModule
   ],
   controllers: [],
   providers: [],

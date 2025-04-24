@@ -5,6 +5,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { errorHandler } from 'src/app/middlewares/error.handler';
 import { PaginationDto } from 'src/app/dto/pagination.dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @Controller('clients')
@@ -12,6 +13,7 @@ export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
   @Get()
+  @ApiOperation({ summary : 'Traer todos los clientes paginados' })
   async findAll(@Query() pagination : PaginationDto) {
     try {
       return await this.clientsService.findAll(pagination);
@@ -21,6 +23,7 @@ export class ClientsController {
   }
 
   @Get('one')
+  @ApiOperation({ summary : 'Traer todo los clientes por un campo y un valor' })
   async findOne(@Query('value') value: string, @Query('property') property: string) {
     try {
       const client = await this.clientsService.findOne(value, property)
@@ -36,6 +39,7 @@ export class ClientsController {
   }
 
   @Post()
+  @ApiOperation({ summary : 'Registrar un cliente' })
   async create(@Body() createClientDto: CreateClientDto) {
     try {
       const { client } = await this.clientsService.create(createClientDto)
@@ -50,6 +54,7 @@ export class ClientsController {
   }
 
   @Patch(':client_ID')
+  @ApiOperation({ summary : 'Actualizar un cliente' })
   async update(@Param('client_ID') client_ID: string, @Body() updateClientDto: UpdateClientDto) {
     try {
       await this.clientsService.update(client_ID, updateClientDto);
@@ -64,6 +69,7 @@ export class ClientsController {
   }
 
   @Delete(':client_ID')
+  @ApiOperation({ summary : 'Eliminar un cliente' })
   async remove(@Param('client_ID') client_ID: string) {
     try {
       await this.clientsService.remove(client_ID)

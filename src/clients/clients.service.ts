@@ -64,6 +64,13 @@ export class ClientsService {
   }
 
   async update(client_ID : string ,updateClientDto: UpdateClientDto) {
+    if(updateClientDto.client_ID && updateClientDto.client_ID !== client_ID)
+      throw { 
+        message : 'El número de documento del cliente no se puede cambiar, eliminalo y crea un nuevo',
+        status : 409 
+      }
+  
+
     const client = await this.conn.findOneBy({ client_ID });
     if(!client) throw { message : 'El cliente no existe', status : 404 }
 
