@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Invoice } from 'src/invoices/entities/invoice.entity';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity({ name : 'clients' })
 export class Client {
@@ -25,4 +26,8 @@ export class Client {
 
     @Column()
     cellphone : string;
+
+    @OneToMany(() => Invoice, invoice => invoice.client_ID)
+    @JoinColumn({ name : 'client_ID', referencedColumnName : 'client_ID' })
+    invoices : Invoice[]; // Relación con la entidad Invoice
 }

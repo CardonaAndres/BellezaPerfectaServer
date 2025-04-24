@@ -30,4 +30,14 @@ export class CreateProductDto {
     @IsNumber()
     @Min(0)
     stock_min: number;
+
+    @ApiProperty({ description: 'Porcentaje de IVA aplicado al producto' })
+    @IsNumber({}, { message : 'El IVA debe ser un número' })
+    @Min(0, { message : 'El IVA no puede ser negativo' })
+    iva: number; // Impuesto al valor agregado
+
+    @ApiProperty({ description: 'Unidad de medida del producto (kg, g, lb, etc.)' })
+    @IsString({ message: 'La unidad de medida debe ser una cadena de texto' })
+    @MinLength(2, { message : 'La unidad de medida debe tener al menos 2 caracteres' })
+    unit_measure: string; // Unidad de medida (kg, g, lb, etc.)
 }

@@ -17,7 +17,8 @@ const main = async () => {
 
   app.enableCors({
     origin : CLIENTS,
-    credentials : true 
+    credentials : true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],  
   });
 
   app.setGlobalPrefix('API/');

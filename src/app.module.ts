@@ -10,6 +10,9 @@ import { ProductsModule } from './products/products.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { Product } from './products/entities/product.entity';
 import { Inventory } from './inventory/entities/inventory.entity';
+import { InvoicesModule } from './invoices/invoices.module';
+import { Invoice } from './invoices/entities/invoice.entity';
+import { Details } from './invoices/entities/details.entity';
 
 @Module({
   imports: [ 
@@ -24,7 +27,9 @@ import { Inventory } from './inventory/entities/inventory.entity';
         User, 
         Client,
         Product,
-        Inventory
+        Inventory,
+        Invoice,
+        Details
       ],
       synchronize: true,
     }),
@@ -32,7 +37,8 @@ import { Inventory } from './inventory/entities/inventory.entity';
     UsersModule, 
     ClientsModule, 
     ProductsModule, 
-    InventoryModule
+    InventoryModule, 
+    InvoicesModule
   ],
   controllers: [],
   providers: [],

@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { Role } from "../enums/roles.enum";
+import { Invoice } from "src/invoices/entities/invoice.entity";
 
 @Entity({ name : 'users' })
 export class User {
@@ -23,4 +24,8 @@ export class User {
 
     @Column({ default : Role.USER })
     role_ID: number;
+
+    @OneToMany(() => Invoice, invoice => invoice.user_ID)
+    @JoinColumn({ name : 'user_ID', referencedColumnName : 'user_ID' }) 
+    invoices : Invoice[];
 }
