@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(req);
 
     //Verificar si el token es valido
-    if (!token) throw new UnauthorizedException('No token provided');
+    if (!token) throw new UnauthorizedException('Por favor, inicie sesión para continuar.');
     
     //Verificar si el token es valido
     try {
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
       req['user'] = payload;
 
     } catch (err) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException('Sesión inválido o expirado.');
     }
 
     return true;

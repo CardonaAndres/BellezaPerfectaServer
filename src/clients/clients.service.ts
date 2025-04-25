@@ -38,7 +38,10 @@ export class ClientsService {
       throw { message : 'El campo no es válido', status : 400 }
 
     const client = await this.conn.findOne({
-      where : { [property] : value }
+      where : { 
+        [property] : value,
+        client_ID : Not('1') 
+      }
     });
 
     if(!client) 

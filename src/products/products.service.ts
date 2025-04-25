@@ -70,7 +70,12 @@ export class ProductsService {
     }
   }
 
-  async update(product_ID: string, updateProductDto: UpdateProductDto) {
+  async update(
+    product_ID: string, 
+    updateProductDto: UpdateProductDto,
+    type : string = 'Actualización del producto en el sistema',
+    reason : string = 'Actualización de producto'
+  ) {
 
     const product = await this.conn.findOneBy({ product_ID });
     if(!product) throw { message : 'No se ha encontrado el producto', status : 404 }   
@@ -83,9 +88,9 @@ export class ProductsService {
     await this.conn.save(productToUpdate);
 
     await this.inventoryService.create({
-      type : 'Actualización del producto en el sistema',
+      type,
       quantity : productToUpdate.stock,
-      reason : 'Actualización de producto',
+      reason,
       product_ID : productToUpdate.product_ID
     });
 

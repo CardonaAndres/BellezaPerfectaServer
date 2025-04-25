@@ -11,5 +11,6 @@ import { Client } from './entities/client.entity';
   providers: [
     ClientsService, ClientSeedService
   ],
+  exports : [ClientsService],
 })
 export class ClientsModule {}
