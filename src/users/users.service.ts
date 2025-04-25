@@ -60,6 +60,8 @@ export class UsersService {
   
     const user = await this.conn.findOneBy({ user_ID: targetUserID });
     if (!user) throw { message: 'El usuario no existe', status: 404 };
+
+    if(!body.role_ID) body.role_ID = user.role_ID;
   
     if (body.password) body.password = await bcrypt.hash(body.password, 10);
   
@@ -73,6 +75,16 @@ export class UsersService {
       message: 'Usuario actualizado',
       user: userWithoutPassword,
     };
+  }
+
+  async remove(user_ID : string){
+    const user = await this.conn.findOneBy({ user_ID });
+    if(!user) throw { message : 'El usuario no existe', status : 404 };
+
+    await this.conn.delete({ user_ID });
+    return {
+      message : 'Usuario eliminado'
+    }
   }
   
 }

@@ -1,6 +1,6 @@
 import { UsersService } from './users.service';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { Controller, Get, UseGuards, Request, Query, Patch, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Query, Patch, Body, Delete, Param } from '@nestjs/common';
 import { CheckAdminRoleGuard } from 'src/auth/guards/check.role.admin.guard';
 import { PaginationDto } from 'src/app/dto/pagination.dto';
 import { errorHandler } from 'src/app/middlewares/error.handler';
@@ -56,6 +56,17 @@ export class UsersController {
   ) {
     try {
         return await this.usersService.update(body, user_ID, req); 
+    } catch(err) {
+      errorHandler(err);
+    }
+  }
+
+  @ApiOperation({ summary : 'Enpoind para eliminar un usuario desde la parte administrativa' })
+  @Delete('/:user_ID')
+  @UseGuards(CheckAdminRoleGuard)
+  async deleteUser(@Param('user_ID') user_ID : string) {
+    try {
+      return await this.usersService.remove(user_ID);
     } catch(err) {
       errorHandler(err);
     }
