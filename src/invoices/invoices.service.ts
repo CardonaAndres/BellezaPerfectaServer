@@ -8,6 +8,7 @@ import { Details } from './entities/details.entity';
 import { UsersService } from 'src/users/users.service';
 import { ClientsService } from 'src/clients/clients.service';
 import { ProductsService } from 'src/products/products.service';
+import { PaginationDto } from 'src/app/dto/pagination.dto';
 
 @Injectable()
 export class InvoicesService {
@@ -18,6 +19,14 @@ export class InvoicesService {
     private readonly clientService : ClientsService,
     private readonly productService : ProductsService
   ){} 
+
+  async findAll(pagination : PaginationDto){
+
+  }
+
+  async findOneByID(invoice_ID : number){
+
+  }
 
   async create(body : CreateInvoiceDto, user_ID : string){
     const iva = body.iva ?? 0;
@@ -80,10 +89,28 @@ export class InvoicesService {
 
     const invoiceSaved = await this.connInvoice.save(invoice);
 
-    //! PENDIENTE: guardar el detalle de la factura
-  
+    for(const item of productsListFiltered){
+      // guardar el detalle de la factura
+      const detail = this.connDetails.create({
+        invoice_ID : invoiceSaved,
+        product_ID : item,
+        quantity : item.quantity,
+        total : item.total,
+      });
+
+      const detailSaved = await this.connDetails.save(detail);
+    }
+
     return {
       message : 'Factura creada correctamente',
     }
+  }
+
+  async update(invoice_ID : number, body : UpdateInvoiceDto){
+
+  }
+
+  async remove(invoice_ID : number){
+
   }
 }
