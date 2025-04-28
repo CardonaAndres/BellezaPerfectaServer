@@ -76,6 +76,21 @@ export class InvoicesService {
     body.user_ID = user.user_ID;
     body.date_start = body.date_start || new Date();
 
+    const { city, zone, neighborhood, address, cellphone } = body;
+    
+    if(client.client_ID === '1' && (!city || !zone || !neighborhood || !address || !cellphone)){
+        throw {  
+          message : 'Para el cliente genérico, los campos city, zone, neighborhood, address y cellphone son obligatorios.',
+          status : 400
+        }
+    }
+
+    const fields = ['city', 'zone', 'neighborhood', 'address', 'cellphone'];
+
+    fields.forEach(field => {
+      body[field] = body[field] || client[field];
+    });
+
     const productsListFiltered : ProductList[] = []
     let total = 0;
     let subtotal = 0;
@@ -91,8 +106,11 @@ export class InvoicesService {
       if(item.quantity <= 0) 
         throw { message : 'La cantidad no puede ser menor o igual a cero', status : 400 };
 
-      item.total = product[0].price * item.quantity;
-      subtotal += product[0].price * item.quantity;
+      const price = item.price || product[0].price;
+
+      item.price = price;
+      item.total = price * item.quantity;
+      subtotal += price * item.quantity;
       total += item.total;
 
       await this.productService.update(product[0].product_ID, {
@@ -116,6 +134,11 @@ export class InvoicesService {
       total : body.total,
       client_ID : client,
       user_ID : user,
+      zone : body.zone,
+      city : body.city,
+      neighborhood : body.neighborhood,
+      address : body.address,
+      cellphone : body.cellphone
     });
 
     const invoiceSaved = await this.connInvoice.save(invoice);
@@ -127,6 +150,7 @@ export class InvoicesService {
         product_ID : item,
         quantity : item.quantity,
         total : item.total,
+        price : item.price
       });
 
       const detailSaved = await this.connDetails.save(detail);
@@ -134,6 +158,7 @@ export class InvoicesService {
 
     return {
       message : 'Factura creada correctamente',
+      invoice_ID : invoiceSaved.invoice_ID
     }
   }
 
@@ -167,6 +192,21 @@ export class InvoicesService {
 
     const { client } = await this.clientService.findOne(body.client_ID, 'client_ID');
     if (!client) throw { message: 'El cliente no existe', status: 404 };
+    
+    const { city, zone, neighborhood, address, cellphone } = body;
+
+    if (client.client_ID === '1' && (!city || !zone || !neighborhood || !address || !cellphone)) {
+      throw {  
+        message: 'Para el cliente genérico, los campos city, zone, neighborhood, address y cellphone son obligatorios.',
+        status: 400
+      };
+    }
+
+    const fields = ['city', 'zone', 'neighborhood', 'address', 'cellphone'];
+
+    fields.forEach(field => {
+      body[field] = body[field] || client[field];
+    });
 
     const productsListFiltered: ProductList[] = [];
     let subtotal = 0;
@@ -185,8 +225,11 @@ export class InvoicesService {
       if (item.quantity <= 0)
         throw { message: 'La cantidad no puede ser menor o igual a cero', status: 400 };
   
-      item.total = product[0].price * item.quantity;
-      subtotal += product[0].price * item.quantity;
+      const price = item.price || product[0].price;
+
+      item.price = price;
+      item.total = price * item.quantity;
+      subtotal += price * item.quantity;
       total += item.total;
   
       // Descontar stock de nuevo
@@ -211,6 +254,11 @@ export class InvoicesService {
       total: updatedTotal,
       client_ID: client,
       user_ID: user,
+      zone : body.zone,
+      city : body.city,
+      neighborhood : body.neighborhood,
+      address : body.address,
+      cellphone : body.cellphone
     });
 
     for (const item of productsListFiltered) {
@@ -219,6 +267,7 @@ export class InvoicesService {
         product_ID: item,
         quantity: item.quantity,
         total: item.total,
+        price : item.price
       });
   
       await this.connDetails.save(detail);
@@ -246,8 +295,6 @@ export class InvoicesService {
       }, 'Factura', 'Eliminacion de la factura: ' + invoice_ID);
     }
 
-    // Eliminar detalles anteriores
-    await this.connDetails.delete({ invoice_ID: { invoice_ID } });
     await this.connInvoice.delete({ invoice_ID });
 
     return {

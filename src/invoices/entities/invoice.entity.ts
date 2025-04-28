@@ -8,6 +8,21 @@ export class Invoice {
     @PrimaryGeneratedColumn()
     invoice_ID: number;
 
+    @Column()
+    city : string;
+
+    @Column()
+    zone : string;
+
+    @Column()
+    neighborhood : string;
+
+    @Column()
+    address : string;
+
+    @Column()
+    cellphone : string;
+
     @Column({ type: 'date', default: () => 'CURRENT_DATE' })
     date_invoice: Date;
 

@@ -13,11 +13,14 @@ export class Details {
     @Column({ type : 'decimal', precision : 10, scale : 2 })
     total : number;
 
-    @ManyToOne(() => Invoice, invoice => invoice.invoice_ID, { eager : true })
+    @Column({ type: 'decimal', precision: 10, scale: 2 })
+    price : number; 
+
+    @ManyToOne(() => Invoice, invoice => invoice.invoice_ID, { eager : true, onDelete : "CASCADE" })
     @JoinColumn({ name : 'invoice_ID', referencedColumnName : 'invoice_ID' })
     invoice_ID : Invoice; // Relación con la entidad Invoice
 
-    @ManyToOne(() => Product, product => product.product_ID, { eager : true })
+    @ManyToOne(() => Product, product => product.product_ID, { eager : true, onDelete : "CASCADE" })
     @JoinColumn({ name : 'product_ID', referencedColumnName : 'product_ID' })
     product_ID : Product; // Relación con la entidad Product
 }

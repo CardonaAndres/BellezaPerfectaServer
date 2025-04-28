@@ -11,7 +11,8 @@ import {
     ValidateNested,
     Min,
     MinLength,
-    Validate
+    Validate,
+    Matches
 } from 'class-validator';
 
 export class CreateInvoiceDto {
@@ -29,6 +30,37 @@ export class CreateInvoiceDto {
     @IsDate({ message: 'La fecha de finalización debe ser una fecha válida.' })
     @Validate(IsFutureOrToday,[], { message: 'La fecha de finalización no puede ser una fecha pasada.' })
     date_end: Date;
+
+    @ApiProperty({ description : 'Ciudad donde se encuenta el cliente' })
+    @IsOptional()
+    @IsString({ message: 'La ciudad debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'La ciudad es obligatoria' })
+    city?: string;
+    
+    @ApiProperty({ description : 'Zona donde esta / resive el cliente' })
+    @IsOptional()
+    @IsString({ message: 'La zona debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'La zona es obligatoria' })
+    zone?: string;
+    
+    @ApiProperty({ description : 'Barrio del cliente' })
+    @IsOptional()
+    @IsString({ message: 'El barrio debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'El barrio es obligatorio' })
+    neighborhood: string;
+    
+    @ApiProperty({ description : 'Dirreción del cliente' })
+    @IsOptional()
+    @IsString({ message: 'La dirección debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'La dirección es obligatoria' })
+    address?: string;
+    
+    @ApiProperty({ description : 'Celular del cliente' })
+    @IsOptional()
+    @IsString({ message: 'El celular debe ser una cadena de texto' })
+    @IsNotEmpty({ message: 'El celular es obligatorio' })
+    @Matches(/^[0-9]{10}$/, { message: 'El celular debe tener 10 dígitos numéricos' })
+    cellphone?: string;
 
     @ApiProperty({ description : 'Metodo de pago' })
     @IsString({ message: 'El tipo de pago debe ser una cadena de texto.' })
@@ -68,7 +100,7 @@ export class CreateInvoiceDto {
     @ApiProperty({ description : 'ID del cliente' })
     @IsString({ message: 'El ID del cliente debe ser una cadena de texto.' })
     @IsNotEmpty({ message: 'El ID del cliente es obligatorio.' })
-    @MinLength(3, { message: 'El ID del cliente no puede estar vacío.' })
+    @MinLength(1, { message: 'El ID del cliente no puede estar vacío.' })
     client_ID : string;
 
     @ApiProperty({ description : 'ID del usuario' })
@@ -93,6 +125,11 @@ export class ProductList {
     @IsNotEmpty({ message: 'La cantidad es obligatoria.' })
     quantity : number;
     
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    price?: number;
+
     @IsOptional()
     total?: number; // total = quantity * product.price | calcular desde el servicio
     // id de la factura a la que pertenece el producto | se asigna desde el servicio

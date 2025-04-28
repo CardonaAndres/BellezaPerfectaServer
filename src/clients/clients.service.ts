@@ -40,12 +40,11 @@ export class ClientsService {
     const client = await this.conn.findOne({
       where : { 
         [property] : value,
-        client_ID : Not('1') 
+         
       }
     });
 
-    if(!client) 
-      throw { message : 'El cliente no existe', status : 404 }
+    if(!client) throw { message : 'El cliente no existe', status : 404 }
 
     return {
       client
