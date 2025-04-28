@@ -13,6 +13,7 @@ import { Inventory } from './inventory/entities/inventory.entity';
 import { InvoicesModule } from './invoices/invoices.module';
 import { Invoice } from './invoices/entities/invoice.entity';
 import { Details } from './invoices/entities/details.entity';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [ 
@@ -38,7 +39,8 @@ import { Details } from './invoices/entities/details.entity';
     ClientsModule, 
     ProductsModule, 
     InventoryModule, 
-    InvoicesModule
+    InvoicesModule, 
+    ReportsModule
   ],
   controllers: [],
   providers: [],

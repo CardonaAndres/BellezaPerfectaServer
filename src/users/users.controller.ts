@@ -14,6 +14,7 @@ export class UsersController {
 
   @Get()
   @UseGuards(CheckAdminRoleGuard)
+  @ApiOperation({ summary : 'Obtener todos los usuarios' })
   async findAllUsers(@Query() pagination : PaginationDto, @Request() req : any){
     try {
       if(!pagination.limit) pagination.limit = 10;
@@ -29,6 +30,7 @@ export class UsersController {
   }
   
   @Get('/me')
+  @ApiOperation({ summary : 'Mi Perfil' })
   async findMe(@Request() req : any) {
     try {
       const { user_ID } = req.user;

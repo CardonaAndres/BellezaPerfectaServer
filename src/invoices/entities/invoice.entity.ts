@@ -47,11 +47,11 @@ export class Invoice {
     @Column({ type: 'decimal', precision: 12, scale: 2 })
     total: number;
 
-    @ManyToOne(() => Client, client => client.client_ID, { eager: true })
+    @ManyToOne(() => Client, client => client)
     @JoinColumn({ name: 'client_ID' })
     client_ID : Client
 
-    @ManyToOne(() => User, user => user.user_ID, { eager: true })
+    @ManyToOne(() => User, user => user)
     @JoinColumn({ name: 'user_ID' })
     user_ID : User;
 

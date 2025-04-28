@@ -28,7 +28,9 @@ export class InvoicesService {
       relations : {
         details : {
           product_ID : true,
-        }
+        },
+        client_ID : true,
+        user_ID : true
       },
     });
 
@@ -49,7 +51,9 @@ export class InvoicesService {
       relations : {
         details : {
           product_ID : true,
-        }
+        },
+        client_ID : true,
+        user_ID : true
       }
     });
 
@@ -61,6 +65,53 @@ export class InvoicesService {
     }
   }
 
+  async findAllByClient(client_ID: string, pagination: PaginationDto) {
+    const { page, limit } = pagination;
+
+    const { client } = await this.clientService.findOne(client_ID, 'client_ID');
+    if (!client) throw { message: 'El cliente NO existe', status: 404 }
+
+    const query = this.connInvoice.createQueryBuilder('invoice')
+    .leftJoinAndSelect('invoice.details', 'details')
+    .leftJoinAndSelect('invoice.user_ID', 'user')
+    .leftJoinAndSelect('invoice.client_ID', 'client')
+    .leftJoinAndSelect('details.product_ID', 'products')
+    .where('client.client_ID = :clientId', { clientId: client_ID });
+
+    if (!page && !limit) {
+      const invoices = await query.getMany();
+      
+      invoices.forEach(item => {
+        if (item.user_ID && item.user_ID.password) item.user_ID.password = "";
+        
+      });
+  
+      return { 
+        invoices 
+      }
+    } else {
+      const [invoices, total] = await query
+      .skip(((page || 1)  - 1) * (limit || 10))
+      .take(limit)
+      .getManyAndCount();
+
+      invoices.forEach(item => {
+        if (item.user_ID && item.user_ID.password) item.user_ID.password = "";
+      });
+
+      return {
+        invoices,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / (limit || 10)),
+        }
+      };
+
+    }
+  }
+  
   async create(body : CreateInvoiceDto, user_ID : string){
     const iva = body.iva ?? 0;
     const retefuente = body.retefuente ?? 0;
@@ -300,5 +351,6 @@ export class InvoicesService {
     return {
       message : 'Factura eliminada correctamente',
     }
-  } 
+  }
+
 }

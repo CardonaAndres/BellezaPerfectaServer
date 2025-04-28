@@ -44,6 +44,16 @@ export class InvoicesController {
     }
   }
 
+  @Get('/client/:client_ID/')
+  @ApiOperation({ summary : 'Obtener todas las facturas de un usuario' })
+  async findAllByClient(@Param('client_ID') client_ID : string, @Query() pagination : PaginationDto){
+    try {
+      return await this.invoicesService.findAllByClient(client_ID, pagination);
+    } catch (err) {
+      errorHandler(err);
+    }
+  }
+
   @Post()
   @ApiOperation({ summary : 'Crear una factura' })
   async create(@Request() req : any, @Body() body : CreateInvoiceDto){

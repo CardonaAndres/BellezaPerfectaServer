@@ -16,11 +16,11 @@ export class Details {
     @Column({ type: 'decimal', precision: 10, scale: 2 })
     price : number; 
 
-    @ManyToOne(() => Invoice, invoice => invoice.invoice_ID, { eager : true, onDelete : "CASCADE" })
+    @ManyToOne(() => Invoice, invoice => invoice.details, { onDelete : "CASCADE" })
     @JoinColumn({ name : 'invoice_ID', referencedColumnName : 'invoice_ID' })
     invoice_ID : Invoice; // Relación con la entidad Invoice
 
-    @ManyToOne(() => Product, product => product.product_ID, { eager : true, onDelete : "CASCADE" })
+    @ManyToOne(() => Product, product => product, { onDelete : "CASCADE" })
     @JoinColumn({ name : 'product_ID', referencedColumnName : 'product_ID' })
     product_ID : Product; // Relación con la entidad Product
 }
