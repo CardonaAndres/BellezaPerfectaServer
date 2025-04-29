@@ -8,7 +8,7 @@ export const database_credentials = {
   port: 3306 as const,
   username: 'root' as const,
   password: '' as const,
-  database: 'belleza_perfecta_db' as const,
+  database: 'bellezaperfecta_db' as const,
 }
 
 export const description = ` Esta API permite la gestión completa de un sistema de facturación interna para pequeñas y medianas empresas. 
