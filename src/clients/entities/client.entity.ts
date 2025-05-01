@@ -24,7 +24,7 @@ export class Client {
     @Column()
     address : string;
 
-    @Column()
+    @Column({ unique : true })
     cellphone : string;
 
     @OneToMany(() => Invoice, invoice => invoice.client_ID)
