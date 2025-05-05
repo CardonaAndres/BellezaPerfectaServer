@@ -342,7 +342,7 @@ export class InvoicesService {
  
     for (const detail of invoice.details) {
       await this.productService.update(detail.product_ID.product_ID, {
-        stock: detail.product_ID.stock + detail.quantity,
+        stock: detail.product_ID.stock + parseInt(String(detail.quantity)),
       }, 'Factura', 'Eliminacion de la factura: ' + invoice_ID);
     }
 
