@@ -20,6 +20,23 @@ export class InvoicesService {
     private readonly productService : ProductsService
   ){} 
 
+  async findAllWithOutPaginate(){
+    const invoices = await this.connInvoice.find({
+      relations : {
+        details : {
+          product_ID : true,
+        },
+        client_ID : true,
+        user_ID : true
+      }
+    });
+
+    return {
+      message : 'Tarea exitosa',
+      invoices,
+    }
+  }
+
   async findAll(pagination : PaginationDto){
     const { page = 1, limit = 10 } = pagination;
     const [ invoices, total ] = await this.connInvoice.findAndCount({

@@ -34,6 +34,16 @@ export class InvoicesController {
     }
   } 
 
+  @Get('/history')
+  @ApiOperation({ summary : 'Todas las tareas sin paginar (HISTORIAL COMPLETO)' })
+  async findAllWithOutPaginate(){
+    try {
+      return await this.invoicesService.findAllWithOutPaginate();
+    } catch (err) {
+      errorHandler(err);
+    }
+  } 
+
   @Get(':invoice_ID')
   @ApiOperation({ summary : 'Obtener una factura por ID' })
   async findOne(@Param('invoice_ID', ParseIntPipe) invoice_ID : number){
