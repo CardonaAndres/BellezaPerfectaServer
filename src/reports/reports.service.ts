@@ -22,7 +22,13 @@ export class ReportsService {
             where: {
                 date_invoice: Between(new Date(startDate), endDateValue),
             },
-            relations: ['details', 'details.product_ID'],
+            relations : {
+              details : {
+                product_ID : true,
+              },
+              client_ID : true,
+              user_ID : true
+            },
             take: limit,
             skip : (page - 1) * limit
         });
