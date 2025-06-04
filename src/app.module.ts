@@ -32,13 +32,7 @@ import { ReportsModule } from './reports/reports.module';
         Invoice,
         Details
       ],
-      synchronize: true,
-      extra : {
-        options: {
-          encrypt: true,
-          trustServerCertificate: false,
-        }
-      }
+      synchronize: true
     }),
     AuthModule, 
     UsersModule, 

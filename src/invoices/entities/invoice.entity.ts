@@ -23,7 +23,7 @@ export class Invoice {
     @Column()
     cellphone : string;
 
-    @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+    @Column({ type: 'date' })
     date_invoice: Date;
 
     @Column({ type: 'date' })

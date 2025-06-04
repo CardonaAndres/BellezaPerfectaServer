@@ -17,7 +17,7 @@ export class UserSeedService implements OnModuleInit {
             if(!user){
                 const newUser = this.conn.create({
                     user_ID : '1032011946',
-                    name : '',
+                    name : 'Andrés Cardona',
                     email : '11cardona31@gmail.com',
                     cellphone : '3012524648',
                     address : 'Cr 00 #00 - 00',
