@@ -1,6 +1,6 @@
 export const PORT = process.env.PORT ?? 3000;
 export const CLIENTS = ['http://localhost:5173'];
-export const SECRET_KEY = process.env.SECRET_KEY || 'secretKey210110011';
+export const SECRET_KEY = process.env.SECRET_KEY || '';
 
 export const database_credentials = {
   type : 'mysql' as const,
