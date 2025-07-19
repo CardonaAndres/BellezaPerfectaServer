@@ -32,7 +32,13 @@ import { ReportsModule } from './reports/reports.module';
         Invoice,
         Details
       ],
-      synchronize: true
+      synchronize: true,
+      extra: {
+        timeout: 30000,
+        acquireTimeout: 30000, // 30s timeout para obtener conexión
+        idleTimeoutMillis: 30000,     // Tiempo antes de cerrar conexión inactiva
+        maxQueryExecutionTime: 10000,    // Log queries que tomen más de 10s
+      },
     }),
     AuthModule, 
     UsersModule, 

@@ -1,4 +1,4 @@
-import * as morgan from 'morgan'
+import * as morgan from 'morgan';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CLIENTS, description, PORT } from './app/configs/app';
@@ -18,7 +18,7 @@ const main = async () => {
   app.enableCors({
     origin : CLIENTS,
     credentials : true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],  
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
 
   app.setGlobalPrefix('API/');
